@@ -1,0 +1,46 @@
+{
+  "name": "v-api-fetch",
+  "version": "1.1.0",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "vue",
+    "axios",
+    "composable",
+    "fetch",
+    "plugin",
+    "api"
+  ],
+  "peerDependencies": {
+    "axios": "^1.0.0",
+    "vue": "^3.2.0"
+  },
+  "scripts": {
+    "semantic-release": "semantic-release"
+  },
+  "author": "Márlon Bento Azevedo (https://github.com/marlon-bento)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marlon-bento/v-api-fetch"
+  },
+  "contributors": [
+    {
+      "name": "Jansem Wallemberg Torquetti Maia",
+      "url": "https://github.com/JansemWall"
+    }
+  ],
+  "description": "Um plugin e composable para Vue 3 que simplifica chamadas de API com Axios, incluindo interceptors e um hook reativo similar ao useFetch do Nuxt",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.2",
+    "semantic-release": "^24.2.7"
+  }
+}
