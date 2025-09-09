@@ -3,7 +3,7 @@ import { ref, watch, toValue, isRef, reactive, inject } from 'vue';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export function useApiFetch(url, options = {}) {
+export function useApiFetch(url, options = {}, customApiInstance = null) {
   // Se uma instância customizada for passada, use-a.
   // Senão, use a padrão injetada pelo plugin.
   const api = customApiInstance || inject('api');
