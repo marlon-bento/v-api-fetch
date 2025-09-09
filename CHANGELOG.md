@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.1...v1.2.2) (2025-09-09)
+
+
+### Bug Fixes
+
+* força o próximo release após sincronia de tags ([bac0f93](https://github.com/marlon-bento/v-api-fetch/commit/bac0f93d921cfd4c091e91e87d243174af57be56))
+
 ## [1.2.1](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.0...v1.2.1) (2025-09-09)
 
 
