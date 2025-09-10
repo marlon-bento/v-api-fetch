@@ -1,3 +1,10 @@
+## [1.2.3](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.2...v1.2.3) (2025-09-09)
+
+
+### Bug Fixes
+
+* o customApiInstance era usado mas não foi passado ([7188d2b](https://github.com/marlon-bento/v-api-fetch/commit/7188d2ba80e019d84321a590750d5cf8d7481ff0))
+
 ## [1.2.2](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.1...v1.2.2) (2025-09-09)
 
 
