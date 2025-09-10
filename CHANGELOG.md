@@ -1,3 +1,10 @@
+## [1.2.4](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.3...v1.2.4) (2025-09-10)
+
+
+### Bug Fixes
+
+* melhora na facilidade de criar novas intancias ([dc2c898](https://github.com/marlon-bento/v-api-fetch/commit/dc2c8988dcdaac4eebb84ef6d459579a57533866))
+
 ## [1.2.3](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.2...v1.2.3) (2025-09-09)
 
 
