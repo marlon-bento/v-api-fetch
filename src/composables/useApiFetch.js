@@ -1,12 +1,20 @@
 // src/composables/useApiFetch.js
 import { ref, watch, toValue, isRef, reactive, inject } from 'vue';
-
+import { instances } from "../store.js";
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 export function useApiFetch(url, options = {}, customApiInstance = null) {
   // Se uma instância customizada for passada, use-a.
   // Senão, use a padrão injetada pelo plugin.
-  const api = customApiInstance || inject('api');
+  let api
+  if (customApiInstance) {
+    if (!instances.includes(customApiInstance)) {
+      throw new Error(`[useApi] Não existe instância com o nome "${customApiInstance}".`);
+    }
+    api = inject(customApiInstance)
+  } else {
+    api = inject('api')
+  }
 
   if (!api) {
     throw new Error('useApiFetch: O plugin Axios não foi instalado. Use app.use(AxiosPlugin, { ... }) no seu main.js.');
@@ -25,7 +33,7 @@ export function useApiFetch(url, options = {}, customApiInstance = null) {
     const currentUrl = toValue(url);
     const currentParams = toValue(options.params);
     const apiOptions = options.apiOptions || {};
-    
+
     const totalAttempts = options.retry || 1;
     const retryDelayMs = options.retryDelay || 1000;
     attempt.total = totalAttempts;
@@ -59,7 +67,7 @@ export function useApiFetch(url, options = {}, customApiInstance = null) {
     }
     pending.value = false;
   };
-  
+
   const watchSources = [];
   if (isRef(url) || typeof url === 'function') watchSources.push(url);
   if (options.params && options.paramsReactives !== false) watchSources.push(options.params);
@@ -68,7 +76,7 @@ export function useApiFetch(url, options = {}, customApiInstance = null) {
       if (isRef(source) || typeof source === 'function') watchSources.push(source);
     });
   }
-  
+
   if (watchSources.length > 0) {
     watch(watchSources, execute, { deep: true, immediate: true });
   } else {
