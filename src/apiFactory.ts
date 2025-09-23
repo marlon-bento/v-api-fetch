@@ -1,7 +1,24 @@
-// src/apiFactory.js   
+// src/apiFactory.ts   
 
 import axios from 'axios';
 import { instances } from "./store.js";
+
+import type { App, Plugin } from 'vue';
+import type { 
+  AxiosInstance, 
+  InternalAxiosRequestConfig, 
+  AxiosError 
+} from 'axios';
+
+export interface AxiosPluginOptions {
+  name: string;
+  hostApi: string;
+  subpath?: string;
+  baseApi?: string;
+  requestInterceptor?: (config: InternalAxiosRequestConfig) => 
+    InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  errorInterceptor?: (error: AxiosError) => any;
+}
 /**
  * Cria uma instância configurada do Axios.
  * É a função base usada por outras funções neste factory.
@@ -9,7 +26,7 @@ import { instances } from "./store.js";
  * @param {object} options - Opções de configuração para a instância do Axios.
  * @returns {import('axios').AxiosInstance}
  */
-export function createApiInstance(app, options = {}) {
+export function createApiInstance(app: App, options: AxiosPluginOptions ): void {
 
   const { 
     name = '',
@@ -39,18 +56,22 @@ export function createApiInstance(app, options = {}) {
     ? `${cleanHost}/${cleanSubpath}${cleanBaseApi}`
     : `${cleanHost}${cleanBaseApi}`;
 
-  const api = axios.create({ baseURL });
+  const api: AxiosInstance = axios.create({ baseURL });
 
   if (requestInterceptor && typeof requestInterceptor === 'function') {
     api.interceptors.request.use(requestInterceptor);
   }
   
   api.interceptors.response.use(
-    response => response, 
-    errorInterceptor || (error => Promise.reject(error))
+    (response) => response,
+    errorInterceptor || ((error: AxiosError) => Promise.reject(error))
   );
-
+  // Fornece a instância para a Composition API (inject)
   app.provide(name, api);
+  // Fornece a instância para a Options API (this.$api)
+  app.config.globalProperties[`$${name}`] = api;
+  
+  // Registra o nome da instância criada
   instances.push(name);
 }
 
