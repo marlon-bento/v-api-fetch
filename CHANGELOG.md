@@ -1,3 +1,10 @@
+## [1.2.5](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.4...v1.2.5) (2025-09-23)
+
+
+### Bug Fixes
+
+* agora é possível fazer requisições passando um dado default para o useApiFetch e também foi adicionada tipagem para todos os arquivos ([9c2521c](https://github.com/marlon-bento/v-api-fetch/commit/9c2521c228484ea93716632745f1b53c3533afee))
+
 ## [1.2.4](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.3...v1.2.4) (2025-09-10)
 
 
