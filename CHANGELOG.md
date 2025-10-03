@@ -1,3 +1,10 @@
+## [1.2.7](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.6...v1.2.7) (2025-10-03)
+
+
+### Bug Fixes
+
+* env se perdeu na ultima versão, mandando novamente para aparecer no npm ([ef42f08](https://github.com/marlon-bento/v-api-fetch/commit/ef42f08db93987649ee937ff7ed381bf37b8d8d1))
+
 ## [1.2.6](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.5...v1.2.6) (2025-10-03)
 
 
