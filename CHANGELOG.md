@@ -1,3 +1,11 @@
+## [1.2.6](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.5...v1.2.6) (2025-10-03)
+
+
+### Bug Fixes
+
+* para evitar erros para quem for usar com javascript sem typescript a biblioteca agora gera o dist com todo o javascript buildado ([ef69dee](https://github.com/marlon-bento/v-api-fetch/commit/ef69dee073b201a656ddf97dfd0ced5d324201cc))
+* para evitar erros para quem for usar com javascript sem typescript a biblioteca agora gera o dist com todo o javascript buildado ([92c926f](https://github.com/marlon-bento/v-api-fetch/commit/92c926f7a5c1bf8e58812aa467d9bb08321ae6b5))
+
 ## [1.2.5](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.4...v1.2.5) (2025-09-23)
 
 
