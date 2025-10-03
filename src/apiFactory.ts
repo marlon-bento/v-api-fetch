@@ -3,7 +3,7 @@
 import axios from 'axios';
 import { instances } from "./store.js";
 
-import type { App, Plugin } from 'vue';
+import type { App } from 'vue';
 import type { 
   AxiosInstance, 
   InternalAxiosRequestConfig, 
