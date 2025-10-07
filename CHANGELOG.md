@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.7...v1.3.0) (2025-10-07)
+
+
+### Features
+
+* agora é possível não fazer automaticamente a requisição, podendo executar só quando quiser ([4215132](https://github.com/marlon-bento/v-api-fetch/commit/4215132776ee031d9546dd63f8165dffa87854b4))
+
 ## [1.2.7](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.6...v1.2.7) (2025-10-03)
 
 
