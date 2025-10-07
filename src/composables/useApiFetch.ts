@@ -35,6 +35,8 @@ export interface UseApiFetchOptions<T> {
   apiOptions?: AxiosRequestConfig;
   // Fontes reativas adicionais para observar
   watch?: WatchSource[];
+  // Controla se vai fazer a requisição imediatamente ou não
+  immediate?: boolean;
 }
 
 
@@ -59,9 +61,17 @@ export function useApiFetch<T = any>(
   if (!api) {
     throw new Error('useApiFetch: Instância da API não encontrada. Verifique se o AxiosPlugin está instalado no main.js com app.use(AxiosPlugin, { ... })');
   }
+  let shouldExecuteImmediately: boolean
 
+  if(
+    'immediate' in options
+  ){
+    shouldExecuteImmediately = options.immediate !== false;
+  }else{
+    shouldExecuteImmediately = true;
+  }
   const data = ref<T | null>(options.initialData ?? null);
-  const pending = ref<boolean>(true);
+  const pending = ref<boolean>(shouldExecuteImmediately);
   const error = ref<AxiosError | null>(null);
   const attempt = reactive({ current: 0, total: 0 });
 
@@ -100,9 +110,11 @@ export function useApiFetch<T = any>(
         break;
       } catch (err : any) {
         error.value = err;
+
         if (options.onResponseError && typeof options.onResponseError === 'function') {
           options.onResponseError({ request: currentUrl, error: err, options, attempt });
         }
+
         if (i < totalAttempts - 1) {
           await delay(retryDelayMs);
         }
@@ -129,9 +141,11 @@ export function useApiFetch<T = any>(
   }
 
   if (watchSources.length > 0) {
-    watch(watchSources, execute, { deep: true, immediate: true });
+    watch(watchSources, execute, { deep: true, immediate: shouldExecuteImmediately });
   } else {
-    execute();
+    if (shouldExecuteImmediately) {
+      execute();
+    }
   }
 
 return {

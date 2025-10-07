@@ -626,3 +626,21 @@ const iceiApi = useApi('alguma-api');
 await iceiApi.delete('/cursos/123');
 </script>
 ```
+
+
+### Adicionado na versão 1.3.0
+
+Agora é possível não executar imediatamente a requisição, o uso é simples e intuitivo:
+
+```html
+<script setup>
+import { useApiFetch } from 'v-api-fetch';
+
+
+const {data: defaultData, pending, error, execute} = useApiFetch('/users'{
+  immediate: false
+});
+
+
+</script>
+```
