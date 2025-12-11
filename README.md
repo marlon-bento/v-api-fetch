@@ -626,7 +626,24 @@ const iceiApi = useApi('alguma-api');
 await iceiApi.delete('/cursos/123');
 </script>
 ```
+### Adicionado na versão 1.4.0
 
+Agora é possível desabilitar todas as requisições passando a opção `disable_request` no useApiFetch.
+
+Exemplo:
+
+```html
+<script setup>
+import { useApiFetch } from 'v-api-fetch';
+
+
+const {data: defaultData, pending, error, execute} = useApiFetch('/users'{
+  disable_request: true
+});
+
+
+</script>
+```
 
 ### Adicionado na versão 1.3.0
 
