@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.4.0...v1.5.0) (2025-12-11)
+
+
+### Features
+
+* enhance useApiFetch with abort controller and improved disable_request handling ([0032704](https://github.com/marlon-bento/v-api-fetch/commit/00327040645397060c0fbbe9a14488b74643e067))
+
 # [1.4.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.3.0...v1.4.0) (2025-12-11)
 
 
