@@ -37,6 +37,8 @@ export interface UseApiFetchOptions<T> {
   watch?: WatchSource[];
   // Controla se vai fazer a requisição imediatamente ou não
   immediate?: boolean;
+  // bloqueia qualquer requisição se vier como true
+  disable_request?: boolean;
 }
 
 
@@ -76,6 +78,10 @@ export function useApiFetch<T = any>(
   const attempt = reactive({ current: 0, total: 0 });
 
   const execute = async () => {
+    if (options.disable_request) {
+      pending.value = false;
+      return;
+    }
     if (options.initialData) {
       data.value = options.initialData;
     }
