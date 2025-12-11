@@ -1,7 +1,8 @@
 // src/composables/useApiFetch.ts
-import { ref, watch, toValue, isRef, reactive, inject } from 'vue';
-import type { Ref, WatchSource } from 'vue';
+import { ref, watch, toValue, isRef, reactive, inject, onUnmounted } from 'vue';
+import type { Ref, WatchSource, MaybeRefOrGetter } from 'vue';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { isCancel } from 'axios'
 const delay = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
 
 interface onResponseContext<T> {
@@ -38,7 +39,7 @@ export interface UseApiFetchOptions<T> {
   // Controla se vai fazer a requisição imediatamente ou não
   immediate?: boolean;
   // bloqueia qualquer requisição se vier como true
-  disable_request?: boolean;
+  disable_request?: MaybeRefOrGetter<boolean>;
 }
 
 
@@ -65,20 +66,24 @@ export function useApiFetch<T = any>(
   }
   let shouldExecuteImmediately: boolean
 
-  if(
+  if (
     'immediate' in options
-  ){
+  ) {
     shouldExecuteImmediately = options.immediate !== false;
-  }else{
+  } else {
     shouldExecuteImmediately = true;
   }
   const data = ref<T | null>(options.initialData ?? null);
   const pending = ref<boolean>(shouldExecuteImmediately);
   const error = ref<AxiosError | null>(null);
   const attempt = reactive({ current: 0, total: 0 });
-
+  let abortController: AbortController | null = null;
   const execute = async () => {
-    if (options.disable_request) {
+    if (abortController) {
+      abortController.abort();
+      abortController = null;
+    }
+    if (toValue(options.disable_request)) {
       pending.value = false;
       return;
     }
@@ -99,11 +104,19 @@ export function useApiFetch<T = any>(
 
     for (let i = 0; i < totalAttempts; i++) {
       attempt.current = i + 1;
+      const currentController = new AbortController();
+      abortController = currentController;
+
       try {
         const response = await api.get(currentUrl, {
           params: currentParams,
+          signal: currentController.signal,
           ...apiOptions
         });
+        if (abortController === currentController) {
+          abortController = null;
+        }
+
         let responseData = response.data as T;
         if (options.transform && typeof options.transform === 'function') {
           responseData = options.transform(responseData);
@@ -114,7 +127,10 @@ export function useApiFetch<T = any>(
           options.onResponse({ request: currentUrl, response, options });
         }
         break;
-      } catch (err : any) {
+      } catch (err: any) {
+        if (isCancel(err)) {
+          return;
+        }
         error.value = err;
 
         if (options.onResponseError && typeof options.onResponseError === 'function') {
@@ -153,12 +169,14 @@ export function useApiFetch<T = any>(
       execute();
     }
   }
-
-return {
-  data,
-  pending,
-  error,
-  execute,
-  attempt
-} as UseApiFetchReturn<T>;
+  onUnmounted(() => {
+    if (abortController) abortController.abort();
+  });
+  return {
+    data,
+    pending,
+    error,
+    execute,
+    attempt
+  } as UseApiFetchReturn<T>;
 }
