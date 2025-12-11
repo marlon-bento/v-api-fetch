@@ -1,5 +1,5 @@
 // src/plugin/index.ts
-import axios from 'axios';
+import axios, {isCancel} from 'axios';
 
 import type { App, Plugin } from 'vue';
 import type { 
@@ -55,7 +55,19 @@ export const AxiosPlugin: Plugin = {
 
     api.interceptors.response.use(
       (response) => response,
-      errorInterceptor || ((error: AxiosError) => Promise.reject(error))
+      (error: AxiosError) => {
+        if (isCancel(error)) {
+          // Se for cancelado, rejeita a Promise silenciosamente.
+          // Isso impede que o 'errorInterceptor' do usuário seja chamado.
+          return Promise.reject(error);
+        }
+        // se não for cancelado, chama o interceptor de erro do usuário, se existir.
+        if (errorInterceptor) {
+          return errorInterceptor(error);
+        }
+        return Promise.reject(error);
+      }
+      
     );
 
     // Fornece a instância para a Composition API (inject)
