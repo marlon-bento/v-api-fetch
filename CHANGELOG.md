@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.3.0...v1.4.0) (2025-12-11)
+
+
+### Features
+
+* add vite-plugin-dts for TypeScript declaration generation ([b3cd7ae](https://github.com/marlon-bento/v-api-fetch/commit/b3cd7ae0a875ccee7ddf5b7736873b6c304aa8e6))
+
 # [1.3.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.2.7...v1.3.0) (2025-10-07)
 
 
