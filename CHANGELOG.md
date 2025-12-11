@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.5.0...v1.6.0) (2025-12-11)
+
+
+### Features
+
+* update version to 1.4.0 and enhance error handling with cancellation support in Axios plugin, error handling is automatically applied when the request  is canceled ([1efaf8b](https://github.com/marlon-bento/v-api-fetch/commit/1efaf8bc74bf85919b0855331e8b531c54849eee))
+
 # [1.5.0](https://github.com/marlon-bento/v-api-fetch/compare/v1.4.0...v1.5.0) (2025-12-11)
 
 
